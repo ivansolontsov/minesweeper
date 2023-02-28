@@ -1,2 +1,1 @@
-# minesweeper
-windows like minesweeper game
+# WIP

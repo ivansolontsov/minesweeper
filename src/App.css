@@ -1,39 +1,77 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
-}
-
-.App-header {
-  min-height: 100vh;
+.minesweeper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  transform: scale(1);
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.minesweeper__window {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.minesweeper__wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: url('./assets/borders/frame.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 10px;
+}
+
+.minesweeper__panel {
+  display: flex;
+  background: url('./assets/borders/frame-top.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 0px;
+  min-height: 41.6px;
+  width: 100%;
+  margin-bottom: -1px;
+  position: relative;
+}
+
+.minesweeper__panel-items {
+  max-width: -webkit-fill-available;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 4px 18px;
+  height: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.minesweeper__field-wrapper {
+  display: flex;
+}
+
+.minesweeper__board {
+  display: flex;
+  flex-direction: column;
+}
+
+.minesweeper__field-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.minesweeper__field-cell {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  background-color: gray;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
 }

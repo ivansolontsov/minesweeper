@@ -1,0 +1,17 @@
+.ui__cell {
+    width: 16px;
+    height: 16px;
+    background: url('../../../assets/cell.png');
+}
+
+.ui__cell_flagged {
+    width: 16px;
+    height: 16px;
+    background: url('../../../assets/flaggedCell.png');
+}
+
+.ui__cell_question {
+    width: 16px;
+    height: 16px;
+    background: url('../../../assets/questionCell.png');
+}

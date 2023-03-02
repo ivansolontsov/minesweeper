@@ -1,0 +1,32 @@
+.ui__smile {
+    width: 21px;
+    height: 21px;
+    background: url('../../../assets/smiles/smileDefault.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.ui__smile_fear {
+    background: url('../../../assets/smiles/fear.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__smile_dead {
+    background: url('../../../assets/smiles/smileDead.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__smile_pressed {
+    background: url('../../../assets/smiles/smileDefaultPressed.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__smile_win {
+    background: url('../../../assets/smiles/smileWin.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}

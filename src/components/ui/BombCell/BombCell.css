@@ -1,0 +1,16 @@
+.ui__bomb {
+    width: 16px;
+    height: 16px;
+}
+
+.ui__bomb_default {
+    background: url('../../../assets/bombs/default.png');
+}
+
+.ui__bomb_clicked{
+    background: url('../../../assets/bombs/clicked.png');
+}
+
+.ui__bomb_flagged {
+    background: url('../../../assets/bombs/flagged.png');
+}

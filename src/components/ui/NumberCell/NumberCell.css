@@ -1,0 +1,39 @@
+.ui__number {
+    width: 16px;
+    height: 16px;
+}
+.ui__number_0 {
+    background: url('../../../assets/numbers/0.png');
+}
+
+.ui__number_1 {
+    background: url('../../../assets/numbers/1.png');
+}
+
+.ui__number_2 {
+    background: url('../../../assets/numbers/2.png');
+}
+
+.ui__number_3 {
+    background: url('../../../assets/numbers/3.png');
+}
+
+.ui__number_4 {
+    background: url('../../../assets/numbers/4.png');
+}
+
+.ui__number_5 {
+    background: url('../../../assets/numbers/5.png');
+}
+
+.ui__number_6 {
+    background: url('../../../assets/numbers/6.png');
+}
+
+.ui__number_7 {
+    background: url('../../../assets/numbers/7.png');
+}
+
+.ui__number_8 {
+    background: url('../../../assets/numbers/8.png');
+}

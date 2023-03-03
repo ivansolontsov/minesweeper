@@ -1,9 +1,10 @@
 # Installation
 ### https://ivansolontsov.github.io/minesweeper/
 What are you need to have:
-1. git
-2. node.js
-3. npm
+* git
+* node.js
+* npm
+
 
 1. Download the repository
 ```

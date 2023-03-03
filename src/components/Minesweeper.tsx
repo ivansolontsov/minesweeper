@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import NumberCell from './ui/NumberCell/NumberCell';
 import BombCell from './ui/BombCell/BombCell';
 import Cell from './ui/Cell/Cell';
@@ -68,7 +68,7 @@ const mapMaskToUi: Record<Mask, React.ReactNode> = {
 
 const Minesweeper = (props: Props) => {
     const size = 16;
-    const dimension = new Array(size).fill(0)
+    const dimension = new Array(size).fill(0) // массив для отрисовки поля, чтобы понимать размер
 
     const [smile, setSmile] = useState<SmileEmotion>(SmileEmotion.Default)
     const [field, setField] = useState<number[]>(renderField(size))
@@ -87,9 +87,9 @@ const Minesweeper = (props: Props) => {
         setSmile(SmileEmotion.Default)
         if (mask[y * size + x] === Mask.Opened) return;
 
-        const whatWeNeedToClear: [number, number][] = []
+        const whatWeNeedToClear: [number, number][] = [] // в этот массив пушим координаты для очистки
 
-        const cleaner = (x: number, y: number) => {
+        const cleaner = (x: number, y: number) => { // эта функция открывает ячейки
             if (x >= 0 && x < size && y >= 0 && y < size) {
                 if (mask[y * size + x] === Mask.Opened) return
                 whatWeNeedToClear.push([x, y])
@@ -171,10 +171,12 @@ const Minesweeper = (props: Props) => {
                                 <div className='minesweeper__field-row' key={y}>
                                     {dimension.map((_, x) => ( // отрисовываем ячейки в строке
                                         <div
-                                            onMouseDown={() => setSmile(SmileEmotion.Fear)}
+                                            onMouseDown={() => {
+                                                if (isGameFailed) return;
+                                                if (mask[y * size + x] !== Mask.Opened) setSmile(SmileEmotion.Fear)
+                                            }}
                                             onClick={(e) => cellLeftClickHandler(x, y, e)}
                                             onContextMenu={(e) => cellRightClickHandler(x, y, e)}
-                                            onMouseLeave={() => setSmile(SmileEmotion.Default)}
                                             className='minesweeper__field-cell'
                                             key={x}
                                         >

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/minesweeper/static/css/main.49ad3ef3.css",
-    "main.js": "/minesweeper/static/js/main.495e40fe.js",
+    "main.css": "/minesweeper/static/css/main.12283967.css",
+    "main.js": "/minesweeper/static/js/main.6d515c5d.js",
     "static/media/frame.svg": "/minesweeper/static/media/frame.9ac10a2a59695ea9f577.svg",
     "static/media/frame-top.svg": "/minesweeper/static/media/frame-top.8d8dfd14219557c20ff3.svg",
     "index.html": "/minesweeper/index.html",
-    "main.49ad3ef3.css.map": "/minesweeper/static/css/main.49ad3ef3.css.map",
-    "main.495e40fe.js.map": "/minesweeper/static/js/main.495e40fe.js.map"
+    "main.12283967.css.map": "/minesweeper/static/css/main.12283967.css.map",
+    "main.6d515c5d.js.map": "/minesweeper/static/js/main.6d515c5d.js.map"
   },
   "entrypoints": [
-    "static/css/main.49ad3ef3.css",
-    "static/js/main.495e40fe.js"
+    "static/css/main.12283967.css",
+    "static/js/main.6d515c5d.js"
   ]
 }

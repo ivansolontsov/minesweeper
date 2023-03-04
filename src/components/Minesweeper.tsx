@@ -4,8 +4,9 @@ import BombCell from './ui/BombCell/BombCell';
 import Cell from './ui/Cell/Cell';
 import Smile from './ui/Smile/Smile';
 import { Bomb, createBoard } from '../helpers/createBoard';
-import Stopwatch from './stopwatch/Stopwatch';
+import Stopwatch from './ui/stopwatch/Stopwatch';
 import { useGameStore, useStopwatchStore } from '../store/store';
+import MineCounter from './ui/MineCounter/MineCounter';
 
 type Props = {}
 
@@ -27,7 +28,7 @@ enum SmileEmotion {
     Win = 'win',
 }
 
-const mapMaskToUi: Record<Mask, React.ReactNode> = {
+const cellMasks: Record<Mask, React.ReactNode> = {
     [Mask.Opened]: null,
     [Mask.Closed]: <Cell />,
     [Mask.Flagged]: <Cell type='flagged' />,
@@ -40,7 +41,6 @@ const mapMaskToUi: Record<Mask, React.ReactNode> = {
 const Minesweeper = (props: Props) => {
     const size = 16;
     const dimension = new Array(size).fill(0) // массив для отрисовки поля, чтобы понимать размер
-
 
     const isGameFailed = useGameStore((state) => state.isGameFailed)
     const setIsGameFailed = useGameStore((state) => state.setIsGameFailed)
@@ -83,7 +83,10 @@ const Minesweeper = (props: Props) => {
         stopTimer()
     }
 
-    const showMineMap = (gameStatus: boolean) => { // показываем пользователю карту мин
+    const showMineMap = (gameStatus: boolean) => {
+        // показываем пользователю карту мин
+        // true - показываем карту при выйгрыше
+        // false - показываем карту при проигрыше
         mask.forEach((_, i) => {
             if (field[i] === Bomb) {
                 if (mask[i] === Mask.Flagged) {
@@ -179,12 +182,12 @@ const Minesweeper = (props: Props) => {
             <div className="minesweeper__window">
                 <div className="minesweeper__panel">
                     <div className="minesweeper__panel-items">
-                        <span>{minesAmount}</span>
+                        <MineCounter digit={minesAmount} />
                         <Smile
                             state={smile}
                             onClick={() => smileClickHandler()}
                             onMouseDown={() => setSmile(SmileEmotion.Pressed)}
-                            onMouseLeave={() => setSmile(SmileEmotion.Default)}
+                            onMouseUp={() => setSmile(SmileEmotion.Default)}
                         />
                         <Stopwatch setGameFailed={loseGame} />
                     </div>
@@ -206,7 +209,7 @@ const Minesweeper = (props: Props) => {
                                             key={x}
                                         >
                                             {mask[y * size + x] !== Mask.Opened
-                                                ? mapMaskToUi[mask[y * size + x]]
+                                                ? cellMasks[mask[y * size + x]]
                                                 : field[y * size + x] === Bomb
                                                     ? (<BombCell state={'default'} />)
                                                     : (<NumberCell number={field[y * size + x]} />)

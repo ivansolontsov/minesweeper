@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useGameStore, useStopwatchStore } from "../../store/store";
-
+import { useGameStore, useStopwatchStore } from "../../../store/store";
+import Number from '../Number/Number'
+import './Stopwatch.css'
 interface Time {
     minutes: number;
     seconds: number;
@@ -59,9 +60,12 @@ const Stopwatch = ({ setGameFailed }: Props) => {
         setTime({ minutes: 0, seconds: 0 })
     }, [isResetCalled])
 
+    console.log()
+
     return (
-        <span>
-            {time.seconds.toString().padStart(2, "0")}
+        <span className={`stopwatch`}>
+            <Number digit={time.seconds.toString().padStart(2, '0').split('')[0]} />
+            <Number digit={time.seconds.toString().padStart(2, '0').split('')[1]} />
         </span>
     );
 }

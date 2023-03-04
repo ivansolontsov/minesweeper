@@ -1,0 +1,64 @@
+.ui__digits {
+    width: 13px;
+    height: 23px; 
+}
+
+.ui__digits_0 {
+    background: url('../../../assets/counter/0.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_1 {
+    background: url('../../../assets/counter/1.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_2 {
+    background: url('../../../assets/counter/2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_3 {
+    background: url('../../../assets/counter/3.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_4 {
+    background: url('../../../assets/counter/4.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_5 {
+    background: url('../../../assets/counter/5.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_6 {
+    background: url('../../../assets/counter/6.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_7 {
+    background: url('../../../assets/counter/7.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_8 {
+    background: url('../../../assets/counter/8.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ui__digits_9 {
+    background: url('../../../assets/counter/9.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,4 @@
+.stopwatch {
+    display: flex;
+    flex-direction: row;
+}

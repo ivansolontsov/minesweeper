@@ -20,14 +20,14 @@
   background: url('./assets/borders/frame.svg');
   background-repeat: no-repeat;
   background-size: contain;
-  padding: 10px;
+  padding: 10.2px;
 }
 
 .minesweeper__panel {
   display: flex;
   background: url('./assets/borders/frame-top.svg');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   padding: 0px;
   min-height: 41.6px;
   width: 100%;

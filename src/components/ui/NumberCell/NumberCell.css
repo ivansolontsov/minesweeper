@@ -1,6 +1,7 @@
 .ui__number {
     width: 16px;
     height: 16px;
+    cursor: default;
 }
 .ui__number_0 {
     background: url('../../../assets/numbers/0.png');

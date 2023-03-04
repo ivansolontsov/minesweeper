@@ -100,7 +100,10 @@ const Minesweeper = (props: Props) => {
     const cellLeftClickHandler = (x: number, y: number) => {
         if (isGameFailed || win) return
         setSmile(SmileEmotion.Default)
-        if (mask[y * size + x] === Mask.Opened) return;
+        if (mask[y * size + x] === Mask.Opened
+            || mask[y * size + x] === Mask.Flagged
+            || mask[y * size + x] === Mask.Question)
+            return;
 
         if (clicks === 0 && field[y * size + x] === Bomb) {
             setField(createBoard(size, [x, y]))
@@ -113,24 +116,23 @@ const Minesweeper = (props: Props) => {
         }
         const whatWeNeedToClear: [number, number][] = [] // в этот массив пушим координаты для очистки
 
-        const cleaner = (x: number, y: number) => { // эта функция открывает ячейки
+        const addToCleaner = (x: number, y: number) => {
             if (x >= 0 && x < size && y >= 0 && y < size) {
                 if (mask[y * size + x] === Mask.Opened) return
-                if (mask[y * size + x] === Mask.Flagged) setMinesAmount(minesAmount + 1)
                 whatWeNeedToClear.push([x, y])
             }
         }
 
-        cleaner(x, y)
+        addToCleaner(x, y)
 
-        while (whatWeNeedToClear.length) {
+        while (whatWeNeedToClear.length) { // очищаем ячейки и накидываем в массив пока не дойдем до той у которой есть цифра
             const [x, y] = whatWeNeedToClear.pop()!!
             mask[y * size + x] = Mask.Opened
             if (field[y * size + x] !== 0) continue;
-            cleaner(x + 1, y)
-            cleaner(x - 1, y)
-            cleaner(x, y + 1)
-            cleaner(x, y - 1)
+            addToCleaner(x + 1, y)
+            addToCleaner(x - 1, y)
+            addToCleaner(x, y + 1)
+            addToCleaner(x, y - 1)
         }
 
         if (field[y * size + x] === Bomb && clicks !== 0) {
@@ -139,7 +141,9 @@ const Minesweeper = (props: Props) => {
         if (clicks === 0) {
             startTimer()
         }
+
         setCliks(clicks + 1)
+        setMinesAmount(amountOfMines - mask.filter((e) => e === Mask.Flagged).length - mask.filter((e) => e === Mask.BombFlagged).length)
         setMask(prev => [...prev])
     }
 
@@ -173,7 +177,7 @@ const Minesweeper = (props: Props) => {
         resetGame()
     }
 
-    if (mask.filter(i => i === Mask.Opened).length === field.length - field.filter((i) => i === Bomb).length && !win) {
+    if (mask.filter(i => i === Mask.Opened).length === field.length - field.filter((i) => i === Bomb).length && !win && !isGameFailed) {
         winGame()
     }
 
@@ -201,11 +205,17 @@ const Minesweeper = (props: Props) => {
                                         <div
                                             onMouseDown={() => {
                                                 if (isGameFailed || win) return;
-                                                if (mask[y * size + x] !== Mask.Opened) setSmile(SmileEmotion.Fear)
+                                                if (
+                                                    mask[y * size + x] !== Mask.Opened
+                                                    && mask[y * size + x] !== Mask.Flagged
+                                                    && mask[y * size + x] !== Mask.Question) {
+                                                    setSmile(SmileEmotion.Fear)
+                                                }
                                             }}
                                             onClick={(e) => cellLeftClickHandler(x, y)}
                                             onContextMenu={(e) => cellRightClickHandler(x, y, e)}
                                             className='minesweeper__field-cell'
+                                            style={{ cursor: win ? 'default' : isGameFailed ? 'default' : 'pointer' }}
                                             key={x}
                                         >
                                             {mask[y * size + x] !== Mask.Opened

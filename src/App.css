@@ -19,7 +19,7 @@
   flex-direction: column;
   background: url('./assets/borders/frame.svg');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   padding: 10.2px;
 }
 

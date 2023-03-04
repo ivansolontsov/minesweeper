@@ -60,12 +60,15 @@ const Stopwatch = ({ setGameFailed }: Props) => {
         setTime({ minutes: 0, seconds: 0 })
     }, [isResetCalled])
 
-    console.log()
+    let formattedTime = '0' + time.seconds.toString().padStart(2, '0')
+
+    console.log(formattedTime)
 
     return (
         <span className={`stopwatch`}>
-            <Number digit={time.seconds.toString().padStart(2, '0').split('')[0]} />
-            <Number digit={time.seconds.toString().padStart(2, '0').split('')[1]} />
+            <Number digit={formattedTime.split('')[0]} />
+            <Number digit={formattedTime.split('')[1]} />
+            <Number digit={formattedTime.split('')[2]} />
         </span>
     );
 }

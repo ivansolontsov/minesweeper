@@ -52,7 +52,7 @@ const Stopwatch = ({ setGameFailed }: Props) => {
     if (isGameBegining) {
         startTimer()
     }
-    if (isGameFailed) {
+    if (isGameFailed || !isGameBegining) {
         stopTimer()
     }
 

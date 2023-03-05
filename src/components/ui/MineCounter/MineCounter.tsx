@@ -7,10 +7,7 @@ type Props = {
 }
 
 const MineCounter = ({ digit }: Props) => {
-    let formattedDigits: string = '0' + digit.toString();
-    if (digit < 10) {
-        formattedDigits = '00' + digit.toString();
-    }
+    const formattedDigits = digit.toString().padStart(3, '0')
     return (
         <span className='minecounter'>
             <Number digit={formattedDigits.split('')[0]} />

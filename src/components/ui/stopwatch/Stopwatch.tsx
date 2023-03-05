@@ -60,7 +60,7 @@ const Stopwatch = ({ setGameFailed }: Props) => {
         setTime({ minutes: 0, seconds: 0 })
     }, [isResetCalled])
 
-    let formattedTime = '0' + time.seconds.toString().padStart(2, '0')
+    let formattedTime = time.seconds.toString().padStart(3, '0')
 
     return (
         <span className={`stopwatch`}>

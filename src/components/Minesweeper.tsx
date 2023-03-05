@@ -3,7 +3,7 @@ import NumberCell from './ui/NumberCell/NumberCell';
 import BombCell from './ui/BombCell/BombCell';
 import Cell from './ui/Cell/Cell';
 import Smile from './ui/Smile/Smile';
-import { Bomb, createBoard } from '../helpers/createBoard';
+import { Bomb, amountOfMines, createBoard } from '../helpers/createBoard';
 import Stopwatch from './ui/stopwatch/Stopwatch';
 import { useGameStore, useStopwatchStore } from '../store/store';
 import MineCounter from './ui/MineCounter/MineCounter';
@@ -49,10 +49,9 @@ const Minesweeper = (props: Props) => {
     const resetTimer = useStopwatchStore((state) => state.resetTimer)
 
     const [clicks, setCliks] = useState(0)
-    const [field, setField] = useState<number[]>(createBoard(size))
+    const [field, setField] = useState<number[]>([])
     const [mask, setMask] = useState<Mask[]>(new Array(size * size).fill(Mask.Closed))
     const [smile, setSmile] = useState<SmileEmotion>(SmileEmotion.Default)
-    const amountOfMines = field.filter((cell) => cell === Bomb).length
     const [minesAmount, setMinesAmount] = useState<number>(amountOfMines)
     const [win, setWin] = useState<boolean>(false)
 
@@ -96,60 +95,57 @@ const Minesweeper = (props: Props) => {
         })
     }
 
-    const cellLeftClickHandler = (x: number, y: number) => {
-        if (isGameFailed || win) return
-        setSmile(SmileEmotion.Default)
-        if (mask[y * size + x] === Mask.Opened
-            || mask[y * size + x] === Mask.Flagged
-            || mask[y * size + x] === Mask.Question)
-            return;
 
-        let newField: number[] = [];
-
-        if (clicks === 0 && field[y * size + x] === Bomb) {
-            newField = createBoard(size, { x: x, y: y })
-            setField(newField)
-            // если первый клик попал в бомбу,
-            // рендерим новое поле, в функцию создания 
-            // поля добавляем координату в которой не должно 
-            // быть бомбы
-            // после этого открываем клетку в которую нажал пользователь
-        }
-        const whatWeNeedToClear: [number, number][] = [] // в этот массив пушим координаты для очистки
-
-        const addToCleaner = (x: number, y: number) => {
-            if (x >= 0 && x < size && y >= 0 && y < size) {
-                if (mask[y * size + x] === Mask.Opened) return
-                whatWeNeedToClear.push([x, y])
-            }
-        }
-
-        addToCleaner(x, y)
-
-        while (whatWeNeedToClear.length) { // очищаем ячейки и накидываем в массив пока не дойдем до той у которой есть цифра
-            const [x, y] = whatWeNeedToClear.pop()!!
-            mask[y * size + x] = Mask.Opened
-            if(clicks === 0 && field[y * size + x] === Bomb) {
-                if (newField[y * size + x] !== 0) continue;
-            } else {
-                if (field[y * size + x] !== 0) continue;
-            }
-            addToCleaner(x + 1, y)
-            addToCleaner(x - 1, y)
-            addToCleaner(x, y + 1)
-            addToCleaner(x, y - 1)
-        }
-
-        if (field[y * size + x] === Bomb && clicks !== 0) {
-            loseGame()
-        }
+    const cellLeftClickHandler = (x: number, y: number, field: number[]) => {
+        let newField: number[] = field;
         if (clicks === 0) {
-            startTimer()
+            newField = createBoard(size, { x: x, y: y })
+            setMinesAmount(newField.filter((e) => e === Bomb).length)
+            setField(newField)
         }
 
-        setCliks(clicks + 1)
-        setMinesAmount(amountOfMines - mask.filter((e) => e === Mask.Flagged).length - mask.filter((e) => e === Mask.BombFlagged).length)
-        setMask(prev => [...prev])
+        leftCellClick(x, y, newField)
+
+        function leftCellClick(x: number, y: number, field: number[]) {
+            if (isGameFailed || win) return
+            setSmile(SmileEmotion.Default)
+            if (mask[y * size + x] === Mask.Opened
+                || mask[y * size + x] === Mask.Flagged
+                || mask[y * size + x] === Mask.Question)
+                return;
+
+            const whatWeNeedToClear: [number, number][] = [] // в этот массив пушим координаты для очистки
+
+            const addToCleaner = (x: number, y: number) => {
+                if (x >= 0 && x < size && y >= 0 && y < size) {
+                    if (mask[y * size + x] === Mask.Opened) return
+                    whatWeNeedToClear.push([x, y])
+                }
+            }
+
+            addToCleaner(x, y)
+
+            while (whatWeNeedToClear.length) { // очищаем ячейки и накидываем в массив пока не дойдем до той у которой есть цифра
+                const [x, y] = whatWeNeedToClear.pop()!!
+                mask[y * size + x] = Mask.Opened
+                if (field[y * size + x] !== 0) continue;
+                addToCleaner(x + 1, y)
+                addToCleaner(x - 1, y)
+                addToCleaner(x, y + 1)
+                addToCleaner(x, y - 1)
+            }
+
+            if (field[y * size + x] === Bomb && clicks !== 0) {
+                loseGame()
+            }
+            if (clicks === 0) {
+                startTimer()
+            }
+
+            setCliks(clicks + 1)
+            setMinesAmount(amountOfMines - mask.filter((e) => e === Mask.Flagged).length - mask.filter((e) => e === Mask.BombFlagged).length)
+            setMask(prev => [...prev])
+        }
     }
 
     const cellRightClickHandler = (x: number, y: number, e: React.MouseEvent) => {
@@ -182,7 +178,7 @@ const Minesweeper = (props: Props) => {
         resetGame()
     }
 
-    if (mask.filter(i => i === Mask.Opened).length === field.length - field.filter((i) => i === Bomb).length && !win && !isGameFailed) {
+    if (mask.filter(i => i === Mask.Opened).length === field.length - field.filter((i) => i === Bomb).length && !win && !isGameFailed && clicks !== 0) {
         winGame()
     }
 
@@ -217,7 +213,7 @@ const Minesweeper = (props: Props) => {
                                                     setSmile(SmileEmotion.Fear)
                                                 }
                                             }}
-                                            onClick={(e) => cellLeftClickHandler(x, y)}
+                                            onClick={(e) => cellLeftClickHandler(x, y, field)}
                                             onContextMenu={(e) => cellRightClickHandler(x, y, e)}
                                             className='minesweeper__field-cell'
                                             style={{ cursor: win ? 'default' : isGameFailed ? 'default' : 'pointer' }}

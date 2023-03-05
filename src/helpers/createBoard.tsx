@@ -1,9 +1,9 @@
 export const Bomb: number = -1;
+export const amountOfMines: number = 40;
 
 export const createBoard = (size: number, noBombThere?: { x: number, y: number }): number[] => {
     const field: number[] = new Array(size * size).fill(0)
-    const amountOfMines: number = 40;
-
+   
     function inc(x: number, y: number) {
         if (x >= 0 && x < size && y >= 0 && y < size) {
             if (field[y * size + x] === Bomb) return;

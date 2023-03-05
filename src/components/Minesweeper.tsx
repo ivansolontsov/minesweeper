@@ -44,7 +44,6 @@ const Minesweeper = (props: Props) => {
 
     const isGameFailed = useGameStore((state) => state.isGameFailed)
     const setIsGameFailed = useGameStore((state) => state.setIsGameFailed)
-
     const startTimer = useStopwatchStore((state) => state.startTimer)
     const stopTimer = useStopwatchStore((state) => state.stopTimer)
     const resetTimer = useStopwatchStore((state) => state.resetTimer)
@@ -105,9 +104,11 @@ const Minesweeper = (props: Props) => {
             || mask[y * size + x] === Mask.Question)
             return;
 
+        let newField: number[] = [];
+
         if (clicks === 0 && field[y * size + x] === Bomb) {
-            setField(createBoard(size, [x, y]))
-            mask[y * size + x] = Mask.Opened
+            newField = createBoard(size, { x: x, y: y })
+            setField(newField)
             // если первый клик попал в бомбу,
             // рендерим новое поле, в функцию создания 
             // поля добавляем координату в которой не должно 
@@ -128,7 +129,11 @@ const Minesweeper = (props: Props) => {
         while (whatWeNeedToClear.length) { // очищаем ячейки и накидываем в массив пока не дойдем до той у которой есть цифра
             const [x, y] = whatWeNeedToClear.pop()!!
             mask[y * size + x] = Mask.Opened
-            if (field[y * size + x] !== 0) continue;
+            if(clicks === 0 && field[y * size + x] === Bomb) {
+                if (newField[y * size + x] !== 0) continue;
+            } else {
+                if (field[y * size + x] !== 0) continue;
+            }
             addToCleaner(x + 1, y)
             addToCleaner(x - 1, y)
             addToCleaner(x, y + 1)

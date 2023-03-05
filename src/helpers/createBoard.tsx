@@ -1,6 +1,6 @@
 export const Bomb: number = -1;
 
-export const createBoard = (size: number, noBombThere?: number[]): number[] => {
+export const createBoard = (size: number, noBombThere?: { x: number, y: number }): number[] => {
     const field: number[] = new Array(size * size).fill(0)
     const amountOfMines: number = 40;
 
@@ -16,7 +16,7 @@ export const createBoard = (size: number, noBombThere?: number[]): number[] => {
         const y = Math.floor(Math.random() * size)
 
         if (noBombThere) {
-            if (x === noBombThere[0] && y === noBombThere[1]) continue
+            if (x === noBombThere.x && y === noBombThere.y) continue
         }
 
         if (field[y * size + x] === Bomb) continue;

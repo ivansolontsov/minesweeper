@@ -2,15 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { useGameStore, useStopwatchStore } from "../../../store/store";
 import Number from '../Number/Number'
 import './Stopwatch.css'
+
 interface Time {
     seconds: number;
 }
 
-interface Props {
-    setGameFailed: () => void,
-}
-
-const Stopwatch = ({ setGameFailed }: Props) => {
+const Stopwatch = () => {
 
     const isGameBegining = useStopwatchStore((state) => state.isTimerStarted)
     const isResetCalled = useStopwatchStore((state) => state.isReset)

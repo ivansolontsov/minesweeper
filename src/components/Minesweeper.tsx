@@ -194,7 +194,7 @@ const Minesweeper = (props: Props) => {
                             onMouseDown={() => setSmile(SmileEmotion.Pressed)}
                             onMouseUp={() => setSmile(SmileEmotion.Default)}
                         />
-                        <Stopwatch setGameFailed={loseGame} />
+                        <Stopwatch />
                     </div>
                 </div>
                 <div className='minesweeper__wrapper'>
